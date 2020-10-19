@@ -4,6 +4,7 @@ import sys
 import configparser
 
 from onboarding.onboardingconfig import OnboardingConfig
+from onboarding.conjurpolicyoutputparser import ConjurPolicyOutputParser
 from onboarding.serviceshelper import ServicesHelper
 
 def main(argv):
@@ -18,7 +19,8 @@ def main(argv):
 
     config = OnboardingConfig(config_file, config_env, ccp_query, policy_out_path)
 
-    svcHelper = ServicesHelper(config)
+    outputParser = ConjurPolicyOutputParser()
+    svcHelper = ServicesHelper(config, outputParser)
     svcHelper.onboard()
 
 if __name__ == "__main__":
