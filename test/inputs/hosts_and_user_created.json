@@ -1,0 +1,13 @@
+{
+  "created_roles": {
+    "_:host:test1": {
+      "id": "_:host:test1",
+      "api_key": "7z0b3vy8fdf1q6p0ck2v3nyq53r87aqc115frr93btyaddkgwvsf"
+    },
+    "_:user:user1": {
+      "id": "_:user:user1",
+      "api_key": "1eq3nks37pe8q31de2m3y2tzcy1rm4rwf37jzqwd12dhg9n3vxamwx"
+    }
+  },
+  "version": 4
+}
