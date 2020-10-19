@@ -41,4 +41,5 @@ class ServicesHelper:
         headers = { "Content-Type": "application/json" }
 
         response = requests.post(url, data=ccp_credentials, headers=headers, verify=self.__config.verifySsl)
-        return response.json()["CyberArkLogonResult"]
+        resp_json = response.json()
+        return resp_json["CyberArkLogonResult"]
