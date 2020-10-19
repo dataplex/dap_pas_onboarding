@@ -38,8 +38,7 @@ class ServicesHelper:
     def pas_rest_authenticate(self, ccp_credentials):
         url = f"https://{self.__config.pam_host}/PasswordVault/API/auth/Cyberark/Logon"
 
-        auth_body = '{ "username": "%s", "password": "%s" }' % ccp_credentials
         headers = { "Content-Type": "application/json" }
 
-        response = requests.post(url, data=auth_body, headers=headers, verify=self.__config.verifySsl)
+        response = requests.post(url, data=ccp_credentials, headers=headers, verify=self.__config.verifySsl)
         return response.json()["CyberArkLogonResult"]
