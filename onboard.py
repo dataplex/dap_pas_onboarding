@@ -3,9 +3,8 @@
 import sys
 import configparser
 
-from onboarding.ServicesHelper import ServicesHelper
-from onboarding.DAPPolicyDeploymentHelper import DAPPolicyDeploymentHelper
-from onboarding.OnboardingConfig import OnboardingConfig
+from onboarding.onboardingconfig import OnboardingConfig
+from onboarding.serviceshelper import ServicesHelper
 
 def main(argv):
     if len(argv) < 4:
@@ -19,10 +18,8 @@ def main(argv):
 
     config = OnboardingConfig(config_file, config_env, ccp_query, policy_out_path)
 
-    svchelper = ServicesHelper(config)
-    deployHelper = DAPPolicyDeploymentHelper(svchelper)
-
-    deployHelper.onboard_hosts()
+    svcHelper = ServicesHelper(config)
+    svcHelper.onboard()
 
 if __name__ == "__main__":
    main(sys.argv[1:])

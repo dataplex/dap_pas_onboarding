@@ -16,11 +16,6 @@ class ServicesHelper:
        with open(self.__config.policy_out_path) as f:
            return f.read()
 
-    def pas_rest_credentials(self):
-        r = requests.get(self.__config.ccp_query, verify=self.__config.verifySsl)
-        resp_json = r.json()
-        return json.dumps({ 'username': resp_json["UserName"], 'password': resp_json["Content"] })
-
     def onboard_hosts(self, hosts_to_onboard):
         if len(hosts_to_onboard) == 0:
             return 0
@@ -34,6 +29,11 @@ class ServicesHelper:
         for conjur_host in hosts_to_onboard:
             add_body = AddConjurHostRequestBuilder(self.__config, conjur_host).build()
             requests.post(url, headers=headers, data=add_body, verify=self.__config.verifySsl)
+
+    def pas_rest_credentials(self):
+        r = requests.get(self.__config.ccp_query, verify=self.__config.verifySsl)
+        resp_json = r.json()
+        return json.dumps({ 'username': resp_json["UserName"], 'password': resp_json["Content"] })
 
     def pas_rest_authenticate(self, ccp_credentials):
         url = f"https://{self.__config.pam_host}/PasswordVault/API/auth/Cyberark/Logon"
