@@ -7,7 +7,7 @@ class ServicesHelper:
         self.__config = config
         self.__policyOutputParser = policyOutputParser
 
-    def onboard():
+    def onboard(self):
         policy_out = self.policy_output_raw()
         hosts_to_onboard = self.__policyOutputParser.hosts(policy_out)
         self.onboard_hosts(hosts_to_onboard)
