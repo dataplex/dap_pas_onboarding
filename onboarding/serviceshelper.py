@@ -31,11 +31,10 @@ class ServicesHelper:
             add_body = AddConjurHostRequestBuilder(self.__config, conjur_host).build()
             try:
                 response = requests.post(url, headers=headers, data=add_body, verify=self.__config.verifySsl)
-                if response.status_code != 201:
-                    response.raise_for_status()
+                response.raise_for_status()
                 print(f'Host: {conjur_host.name}\n - Status: {response.status_code} - {response.text}')
-            except:
-                print("Unexpected error:", sys.exc_info()[0])
+            except requests.exceptions.HTTPError as err:
+                raise SystemExit(err)
 
     def pas_rest_credentials(self):
         r = requests.get(self.__config.ccp_query, verify=self.__config.verifySsl)
