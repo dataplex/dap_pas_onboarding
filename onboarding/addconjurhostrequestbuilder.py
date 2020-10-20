@@ -18,7 +18,7 @@ class AddConjurHostRequestBuilder:
         data['platformId'] = self.__config.platform_id
 
         platformAccountProperties = {}
-        platformAccountProperties['ConjurAccount'] = self.__host.account
+        platformAccountProperties['AWSAccessKeyID'] = self.__host.account
         data['platformAccountProperties'] = platformAccountProperties
 
         secretManagement = {}

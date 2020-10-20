@@ -1,3 +1,4 @@
+import sys
 import requests
 import json
 from .addconjurhostrequestbuilder import AddConjurHostRequestBuilder
@@ -23,12 +24,18 @@ class ServicesHelper:
         creds_from_ccp = self.pas_rest_credentials()
         auth_header = self.pas_rest_authenticate(creds_from_ccp)
 
-        url = f'https://{self.__config.pam_host}/PasswordVault/API/Account'
+        url = f'https://{self.__config.pam_host}/PasswordVault/API/Accounts'
         headers = { "Content-Type": "application/json", "Authorization": auth_header }
 
         for conjur_host in hosts_to_onboard:
             add_body = AddConjurHostRequestBuilder(self.__config, conjur_host).build()
-            requests.post(url, headers=headers, data=add_body, verify=self.__config.verifySsl)
+            try:
+                response = requests.post(url, headers=headers, data=add_body, verify=self.__config.verifySsl)
+                if response.status_code != 201:
+                    response.raise_for_status()
+                print(f'Host: {conjur_host.name}\n - Status: {response.status_code} - {response.text}')
+            except:
+                print("Unexpected error:", sys.exc_info()[0])
 
     def pas_rest_credentials(self):
         r = requests.get(self.__config.ccp_query, verify=self.__config.verifySsl)
@@ -41,5 +48,4 @@ class ServicesHelper:
         headers = { "Content-Type": "application/json" }
 
         response = requests.post(url, data=ccp_credentials, headers=headers, verify=self.__config.verifySsl)
-        resp_json = response.json()
-        return resp_json["CyberArkLogonResult"]
+        return response.json()
