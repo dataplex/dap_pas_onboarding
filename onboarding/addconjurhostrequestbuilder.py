@@ -11,14 +11,14 @@ class AddConjurHostRequestBuilder:
 
         data['safeName'] = self.__host.name
         data['name'] = "host-" + self.__host.name
-        data['userName'] = self.__host.login_name
+        data['HostName'] = self.__host.login_name
         data['secret'] = self.__host.api_key
 
-        data['address'] = self.__config.dap_master
+        data['ApplianceURL'] = f'https://{self.__config.dap_master}/api'
         data['platformId'] = self.__config.platform_id
 
         platformAccountProperties = {}
-        platformAccountProperties['AWSAccessKeyID'] = self.__host.account
+        platformAccountProperties['ConjurAccount'] = self.__host.account
         data['platformAccountProperties'] = platformAccountProperties
 
         secretManagement = {}
